@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="VRecyclerViewBanner">
+        <!--轮播时间间隔-->
+        <attr name="interval" />
+        <!--是否显示下方指示器-->
+        <attr name="showIndicator" />
+        <!--轮播方向-->
+        <attr name="orientation" />
+        <!--是否开启自动轮播-->
+        <attr name="autoPlaying"/>
+        <!--item 之间的分割宽度-->
+        <attr name="itemSpace" format="integer"/>
+        <!--当前 item 的缩放度-->
+        <attr name="centerScale" format="float"/>
+        <!--切换的速度-->
+        <attr name="moveSpeed" format="float"/>
+        <!--可视范围内显示的个数-->
+        <attr name="showItemCount" format="enum">
+            <enum name="TWO" value="2"/>
+            <enum name="THREE" value="3"/>
+        </attr>
+        <!--第一个 item 的左边距，showItemCount=TWO 时才生效的属性-->
+        <attr name="firstItemMarginLeft" format="dimension"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+    <com.vegen.open.library.VRecyclerViewBanner
+        android:id="@+id/banner_type1"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:centerScale="1.2"
+        app:itemSpace="10"
+        app:autoPlaying="true"
+        app:showIndicator="false">
+    </com.vegen.open.library.VRecyclerViewBanner>
+
+    <com.vegen.open.library.VRecyclerViewBanner
+        android:id="@+id/banner_type2"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:centerScale="1.2"
+        app:itemSpace="10"
+        app:autoPlaying="true"
+        app:showIndicator="false"
+        app:showItemCount="TWO"
+        app:firstItemMarginLeft="20dp">
+    </com.vegen.open.library.VRecyclerViewBanner>
+
+</LinearLayout>

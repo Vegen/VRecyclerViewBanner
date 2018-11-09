@@ -1,11 +1,11 @@
-[ ![Version](https://api.bintray.com/packages/vegen/VRecyclerViewBanner/VRecyclerViewBanner/images/download.svg) ](https://bintray.com/vegen/VRecyclerViewBanner/VRecyclerViewBanner/_latestVersion)
+[ ![Download](https://api.bintray.com/packages/vegen/VRecyclerViewBanner/VRecyclerViewBanner/images/download.svg) ](https://bintray.com/vegen/VRecyclerViewBanner/VRecyclerViewBanner/_latestVersion)
 
 ## 使用
 
 ```
 implementation 'com.vegen.open:VRecyclerViewBanner:+'
 ```
-`其中 '+' 请填写版本号 Version 后的最新版本`
+`其中 '+' 请填写版本号 Download 后的最新版本`
 
 ## 示例(kotlin)
 

@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
         var adapter = HomeBannerAdapter(bannerDataList)
         banner_type1.setAdapter(adapter)
-        banner_type1.setCurrentIndex(1)
         banner_type2.setAdapter(adapter)
     }
 }

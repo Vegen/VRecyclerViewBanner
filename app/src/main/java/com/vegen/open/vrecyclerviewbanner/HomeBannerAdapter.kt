@@ -22,10 +22,10 @@ class HomeBannerAdapter(var bannerList: ArrayList<String>) : RecyclerView.Adapte
     private var onBannerItemClickListener: VRecyclerViewBanner.OnBannerItemClickListener? = null
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        var imgUrl = bannerList[p1 % bannerList.size]
+        var imgUrl = bannerList[p1]
         Glide.with(p0.ivBg.context).load(imgUrl).into(p0.ivBg)
         p0.itemView.setOnClickListener {
-            onBannerItemClickListener?.onItemClick(p1 % bannerList.size)
+            onBannerItemClickListener?.onItemClick(p1)
         }
     }
 
@@ -35,7 +35,7 @@ class HomeBannerAdapter(var bannerList: ArrayList<String>) : RecyclerView.Adapte
     }
 
     override fun getItemCount(): Int {
-        return if (bannerList.size < 2) bannerList.size else Integer.MAX_VALUE
+        return bannerList?.size
     }
 
     fun setOnBannerItemClickListener(onBannerItemClickListener: VRecyclerViewBanner.OnBannerItemClickListener) {

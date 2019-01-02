@@ -30,30 +30,6 @@ import static android.widget.AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
  * @description 可可见页为两页和三页轮播的控件，具体属性如下
  */
 
-/**
- * <!--轮播时间间隔-->
- * <attr name="interval" />
- * <!--是否显示下方指示器-->
- * <attr name="showIndicator" />
- * <!--轮播方向-->
- * <attr name="orientation" />
- * <!--是否开启自动轮播-->
- * <attr name="autoPlaying"/>
- * <!--item 之间的分割宽度-->
- * <attr name="itemSpace" format="integer"/>
- * <!--当前 item 的缩放度-->
- * <attr name="centerScale" format="float"/>
- * <!--切换的速度-->
- * <attr name="moveSpeed" format="float"/>
- * <!--可视范围内显示的个数-->
- * <attr name="showItemCount" format="enum">
- * <enum name="TWO" value="2"/>
- * <enum name="THREE" value="3"/>
- * </attr>
- * <!--第一个 item 的左边距，showItemCount=TWO 时才生效的属性-->
- * <attr name="firstItemMarginLeft" format="dimension"/>
- */
-
 public class VRecyclerViewBanner extends FrameLayout {
 
     private int autoPlayDuration;//刷新间隔时间
@@ -114,7 +90,7 @@ public class VRecyclerViewBanner extends FrameLayout {
     protected void initView(Context context, AttributeSet attrs) {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.VRecyclerViewBanner);
-        showIndicator = a.getBoolean(R.styleable.VRecyclerViewBanner_showIndicator, true);
+        showIndicator = a.getBoolean(R.styleable.VRecyclerViewBanner_showIndicator, false);
         autoPlayDuration = a.getInt(R.styleable.VRecyclerViewBanner_interval, 4000);
         isAutoPlaying = a.getBoolean(R.styleable.VRecyclerViewBanner_autoPlaying, true);
         itemSpace = dp2px(a.getInt(R.styleable.VRecyclerViewBanner_itemSpace, 20));
@@ -165,6 +141,20 @@ public class VRecyclerViewBanner extends FrameLayout {
         mLayoutManager.setCenterScale(centerScale);
         mLayoutManager.setMoveSpeed(moveSpeed);
         mLayoutManager.setFirstItemMarginLeft(firstItemMarginLeft);
+        mLayoutManager.setOnPageChangeListener(new BannerLayoutManager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                if (onPageChangeListener != null) {
+                    Log.e("Banner2", "position:" + position);
+                    onPageChangeListener.onPageSelected(position);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         mRecyclerView.setLayoutManager(mLayoutManager);
         new CenterSnapHelper().attachToRecyclerView(mRecyclerView);
 
@@ -185,12 +175,21 @@ public class VRecyclerViewBanner extends FrameLayout {
         }
     }
 
-    protected void setShowItemCount(int count) {
-        this.showItemCount = count;
-        mLayoutManager.setShowItemCount(count);
+    /** 模式 **/
+    public enum ITEM_COUNT{
+        TWO, THREE
     }
 
-    protected void setFirstItemMarginLeft(float marginLeft) {
+    /**
+     * 设置显示的可见范围最大 item 数量
+     * @param count
+     */
+    public void setShowItemCount(ITEM_COUNT count) {
+        this.showItemCount = (count == ITEM_COUNT.TWO ? 2 : 3);
+        mLayoutManager.setMaxVisibleItemCount(this.showItemCount);
+    }
+
+    public void setFirstItemMarginLeft(float marginLeft) {
         this.firstItemMarginLeft = marginLeft;
         mLayoutManager.setFirstItemMarginLeft(marginLeft);
     }
@@ -247,7 +246,7 @@ public class VRecyclerViewBanner extends FrameLayout {
      *
      * @param playing 开始播放
      */
-    protected synchronized void setPlaying(boolean playing) {
+    public synchronized void setPlaying(boolean playing) {
         if (isAutoPlaying && hasInit) {
             if (!isPlaying && playing) {
                 mHandler.sendEmptyMessageDelayed(WHAT_AUTO_PLAY, autoPlayDuration);
@@ -271,6 +270,14 @@ public class VRecyclerViewBanner extends FrameLayout {
     public void setCurrentIndex(int index) {
         this.currentIndex = index;
         mRecyclerView.scrollToPosition(index);
+    }
+
+    /**
+     * 刷新轮播标识
+     */
+    public void refreshInfinite(){
+        bannerSize = mRecyclerView.getAdapter().getItemCount();
+        mLayoutManager.setInfinite(bannerSize >= showItemCount);
     }
 
     /**
@@ -392,6 +399,16 @@ public class VRecyclerViewBanner extends FrameLayout {
             indicatorAdapter.setPosition(currentIndex % bannerSize);
             indicatorAdapter.notifyDataSetChanged();
         }
+    }
+
+    public void setOnPageChangeListener(OnPageChangeListener listener){
+        this.onPageChangeListener = listener;
+    }
+
+    private OnPageChangeListener onPageChangeListener;
+
+    public interface OnPageChangeListener{
+        void onPageSelected(int position);
     }
 
     public interface OnBannerItemClickListener {

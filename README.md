@@ -32,7 +32,6 @@ var bannerDataList = arrayListOf(
         
 var adapter = HomeBannerAdapter(bannerDataList)
 banner_type1.setAdapter(adapter)
-banner_type1.setCurrentIndex(1)
 ```
 
 轮播样式的 Adapter
@@ -42,10 +41,10 @@ class HomeBannerAdapter(var bannerList: ArrayList<String>) : RecyclerView.Adapte
     private var onBannerItemClickListener: VRecyclerViewBanner.OnBannerItemClickListener? = null
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        var imgUrl = bannerList[p1 % bannerList.size]
+        var imgUrl = bannerList[p1]
         Glide.with(p0.ivBg.context).load(imgUrl).into(p0.ivBg)
         p0.itemView.setOnClickListener {
-            onBannerItemClickListener?.onItemClick(p1 % bannerList.size)
+            onBannerItemClickListener?.onItemClick(p1)
         }
     }
 
@@ -55,7 +54,7 @@ class HomeBannerAdapter(var bannerList: ArrayList<String>) : RecyclerView.Adapte
     }
 
     override fun getItemCount(): Int {
-        return if (bannerList.size < 2) bannerList.size else Integer.MAX_VALUE
+        return bannerList?.size
     }
 
     fun setOnBannerItemClickListener(onBannerItemClickListener: VRecyclerViewBanner.OnBannerItemClickListener) {
@@ -73,16 +72,17 @@ class HomeBannerAdapter(var bannerList: ArrayList<String>) : RecyclerView.Adapte
         }
     }
 }
+
 ```
 
 demo 效果如下
-![](./demo.jpg)
+![](./demo.gif)
 
 ## 相关属性
 
 | **属性名称**  | **方法** | **意义** | **类型** | **默认值** |
 | --- | ---| --- | --- | --- |
-| app:showIndicator |setShowIndicator(boolean showIndicator)| 是否显示指示器 | boolean | true |
+| app:showIndicator |setShowIndicator(boolean showIndicator)| 是否显示指示器 | boolean | false |
 | app:interval |setAutoPlayDuration(int autoPlayDuration)| 轮播时间间隔 | int | 4000 |
 | app:isAutoPlaying |setAutoPlaying(boolean isAutoPlaying)| 是否开启自动轮播 | boolean | true |
 | app:orientation | setOrientation(int orientation)|轮播图方向 | enum | horizontal |

@@ -7,7 +7,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -130,7 +129,6 @@ public class BannerLayoutManager extends RecyclerView.LayoutManager {
     private int itemSpace = 20;
     private float centerScale = 1f;
     private float moveSpeed = 1.0f;
-    private int showItemCount = 3;
     private float firstItemMarginLeft = 10;
 
     protected float getDistanceRatio() {
@@ -161,10 +159,6 @@ public class BannerLayoutManager extends RecyclerView.LayoutManager {
         float scale = calculateScale(targetOffset + mSpaceMain);
         itemView.setScaleX(scale);
         itemView.setScaleY(scale);
-    }
-
-    protected void setShowItemCount(int count) {
-        this.showItemCount = count;
     }
 
     protected void setFirstItemMarginLeft(float marginLeft) {
@@ -212,7 +206,6 @@ public class BannerLayoutManager extends RecyclerView.LayoutManager {
         setReverseLayout(reverseLayout);
         setAutoMeasureEnabled(true);
         setItemPrefetchEnabled(false);
-        setShowItemCount(showItemCount);
     }
 
     @Override
@@ -761,8 +754,10 @@ public class BannerLayoutManager extends RecyclerView.LayoutManager {
                     mSpaceInOther + left + mDecoratedMeasurementInOther, mSpaceMain + top + mDecoratedMeasurement);
         } else {
 
-            if (showItemCount == 2) {
-                int trueLeft = only ? (mSpaceMain + left) : (int) (left + itemSpace + firstItemMarginLeft);
+            if (mMaxVisibleItemCount == 2) {
+                int offsetLeft = (int) ((mOrientationHelper.getTotalSpace() - mDecoratedMeasurement * centerScale) / 2);
+                // Log.e("BannerLayoutManage", "offsetLeft:" + offsetLeft);
+                int trueLeft = only ? (mSpaceMain + left) : (int) (mSpaceMain + left - offsetLeft + firstItemMarginLeft);
                 layoutDecorated(scrap, trueLeft, mSpaceInOther + top,
                         trueLeft + mDecoratedMeasurement, mSpaceInOther + top + mDecoratedMeasurementInOther);
             } else {

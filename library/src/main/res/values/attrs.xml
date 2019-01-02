@@ -2,13 +2,13 @@
 <resources>
     <declare-styleable name="VRecyclerViewBanner">
         <!--轮播时间间隔-->
-        <attr name="interval" />
+        <attr name="interval" format="integer" />
         <!--是否显示下方指示器-->
-        <attr name="showIndicator" />
+        <attr name="showIndicator" format="boolean" />
         <!--轮播方向-->
-        <attr name="orientation" />
+        <attr name="orientation" format="integer" />
         <!--是否开启自动轮播-->
-        <attr name="autoPlaying"/>
+        <attr name="autoPlaying" format="boolean"/>
         <!--item 之间的分割宽度-->
         <attr name="itemSpace" format="integer"/>
         <!--当前 item 的缩放度-->

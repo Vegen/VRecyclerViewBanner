@@ -22,5 +22,7 @@
         </attr>
         <!--第一个 item 的左边距，showItemCount=TWO 时才生效的属性-->
         <attr name="firstItemMarginLeft" format="dimension"/>
+        <!--是否无穷循环-->
+        <attr name="infinite" format="boolean"/>
     </declare-styleable>
 </resources>

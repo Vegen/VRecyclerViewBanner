@@ -15,8 +15,9 @@
         android:layout_marginBottom="10dp"
         app:centerScale="1.2"
         app:itemSpace="10"
-        app:autoPlaying="true"
+        app:autoPlaying="false"
         app:interval="800"
+        app:infinite="false"
         app:showIndicator="false">
     </com.vegen.open.library.VRecyclerViewBanner>
 

@@ -7,6 +7,11 @@ implementation 'com.vegen.open:VRecyclerViewBanner:+'
 ```
 `其中 '+' 请填写版本号 Download 后的最新版本`
 
+## 版本
+
+- #1.2 增加是否无限循环的属性 `infinite` 和方法 `setInfinite(boolean infinite)`
+- #1.1 fix 两页模式的左边距，轮播的 bug
+
 ## 示例(kotlin)
 
 ```

@@ -55,6 +55,7 @@ public class VRecyclerViewBanner extends FrameLayout {
     int itemSpace;
     float centerScale;
     float moveSpeed;
+    private boolean mInfinite;
 
     private int showItemCount = 3;          // 可视范围内的 item 数
     private float firstItemMarginLeft = 0;  // 第一个 item 的左边距
@@ -98,7 +99,7 @@ public class VRecyclerViewBanner extends FrameLayout {
         moveSpeed = a.getFloat(R.styleable.VRecyclerViewBanner_moveSpeed, 1.0f);
         showItemCount = a.getInt(R.styleable.VRecyclerViewBanner_showItemCount, showItemCount);
         firstItemMarginLeft = a.getDimension(R.styleable.VRecyclerViewBanner_firstItemMarginLeft, dp2px((int) firstItemMarginLeft));
-
+        mInfinite = a.getBoolean(R.styleable.VRecyclerViewBanner_infinite, true);
         if (mSelectedDrawable == null) {
             //绘制默认选中状态图形
             GradientDrawable selectedGradientDrawable = new GradientDrawable();
@@ -229,6 +230,18 @@ public class VRecyclerViewBanner extends FrameLayout {
     }
 
     /**
+     * 是否无限循环
+     * @param infinite
+     */
+    public void setInfinite(boolean infinite) {
+        this.mInfinite = infinite;
+    }
+
+    public boolean isInfinite() {
+        return mInfinite;
+    }
+
+    /**
      * 设置轮播间隔时间
      *
      * @param autoPlayDuration 时间毫秒
@@ -277,7 +290,7 @@ public class VRecyclerViewBanner extends FrameLayout {
      */
     public void refreshInfinite(){
         bannerSize = mRecyclerView.getAdapter().getItemCount();
-        mLayoutManager.setInfinite(bannerSize >= showItemCount);
+        mLayoutManager.setInfinite(mInfinite && bannerSize >= showItemCount);
     }
 
     /**
@@ -287,7 +300,7 @@ public class VRecyclerViewBanner extends FrameLayout {
         hasInit = true;
         mRecyclerView.setAdapter(adapter);
         bannerSize = adapter.getItemCount();
-        mLayoutManager.setInfinite(bannerSize >= showItemCount);
+        mLayoutManager.setInfinite(mInfinite && bannerSize >= showItemCount);
         setPlaying(true);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 

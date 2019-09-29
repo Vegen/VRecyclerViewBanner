@@ -96,6 +96,7 @@ demo 效果如下
 | app:moveSpeed | setMoveSpeed(float moveSpeed)|滚动速度，越大越快 | float | 1.0 |
 | app:showItemCount | setShowItemCount(int count)|可视范围内显示的个数 | enum | THREE |
 | app:firstItemMarginLeft | setFirstItemMarginLeft(float marginLeft)|第一个 item 的左边距，showItemCount=TWO 时才生效的属性 | dimension | 0dp |
+| app:infinite | setInfinite(boolean infinite)| 是否开启无限循环 | boolean | true |
 
 
 ## 致谢
